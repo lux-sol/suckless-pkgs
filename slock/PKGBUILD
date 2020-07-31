@@ -1,0 +1,26 @@
+#Build custom slock
+
+
+pkgname=suckless-slock
+pkgver=20170325.35633d4
+pkgrel=1
+pkgdesc='Simple X display locker'
+url='http://tools.suckless.org/slock'
+arch=('i686' 'x86_64' 'armv7h')
+license=('MIT')
+makedepends=('git')
+depends=('libxrandr')
+
+prepare() {
+  git clone --single-branch --branch custom "https://github.com/divis1bleZer0/suckless-slock.git"
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  make PREFIX=/usr DESTDIR="$pkgdir" install
+}

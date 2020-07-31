@@ -1,0 +1,24 @@
+#Build custom DWM
+
+pkgname=suckless-dwm
+pkgver="6.2"
+pkgrel=1
+pkgdesc="A dynamic window manager for X"
+url="http://dwm.suckless.org"
+arch=('i686' 'x86_64')
+license=('MIT')
+options=(zipman)
+depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
+prepare() {
+  git clone --single-branch --branch custom "https://github.com/divis1bleZer0/suckless-dwm.git"
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  make PREFIX=/usr DESTDIR="$pkgdir" install
+}

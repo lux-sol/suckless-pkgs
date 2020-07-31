@@ -1,0 +1,25 @@
+#Build custom slstatus
+
+pkgname=suckless-slstatus
+pkgver=r540.dd7f189
+pkgrel=1
+pkgdesc='A status monitor for window managers'
+arch=('i686' 'x86_64')
+url='http://tools.suckless.org/slstatus'
+depends=('libx11')
+makedepends=('git')
+license=('custom:ISC')
+
+prepare() {
+  git clone --single-branch --branch custom "https://github.com/divis1bleZer0/suckless-slstatus.git"
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  make PREFIX=/usr DESTDIR="$pkgdir" install
+}

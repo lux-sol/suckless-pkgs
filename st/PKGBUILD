@@ -1,0 +1,24 @@
+#Build custom st
+
+pkgname=suckless-st
+pkgver=0.8.4
+pkgrel=1
+pkgdesc='A simple virtual terminal emulator for X.'
+arch=('i686' 'x86_64' 'armv7h')
+license=('MIT')
+depends=(libxft)
+url=https://st.suckless.org
+
+prepare() {
+  git clone --single-branch --branch custom "https://github.com/divis1bleZer0/suckless-st.git"
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  make PREFIX=/usr DESTDIR="$pkgdir" install
+}
