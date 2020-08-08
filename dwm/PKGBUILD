@@ -8,7 +8,7 @@ url="http://dwm.suckless.org"
 arch=('i686' 'x86_64')
 license=('MIT')
 options=(zipman)
-depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
+depends=('libx11' 'libxinerama' 'libxft' 'freetype2', 'st', 'slstatus', 'slock')
 prepare() {
   git clone --single-branch --branch custom "https://github.com/divis1bleZer0/suckless-dwm.git"
 }
